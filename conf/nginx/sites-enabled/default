@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    root /home/vagrant/vm/express101;
+
+    # TODO. turn static on, enable archiving and basic scraping
+    location /public/ {
+        # access_log off;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        # access_log off;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header x-forwarded-for $proxy_add_x_forwarded_for;
+
+        client_max_body_size 10m;
+    }
+}

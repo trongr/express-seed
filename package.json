@@ -5,7 +5,8 @@
     "private": true,
     "scripts": {
         "start": "PORT=8080 node ./bin/www",
-        "postinstall": "node node_modules/protractor/bin/webdriver-manager update"
+        "postinstall": "node node_modules/protractor/bin/webdriver-manager update",
+        "nginx": "conf/nginx/install.sh"
     },
     "dependencies": {
         "express": "~4.9.0",

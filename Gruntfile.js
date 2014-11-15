@@ -31,10 +31,9 @@ module.exports = function(grunt) {
             },
             run: {}
         },
-        // TODO change to node / express
         shell: {
-            django: {
-                command: 'python manage.py runserver 0.0.0.0:8000',
+            nginx: { // TODO. use for something else. nginx configs and other ones are done in npm
+                command: 'conf/nginx/install.sh',
                 options: {
                     stdout: true,
                     stderr: true,
@@ -63,6 +62,6 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask("watch", ["karma:watch"])
-    // grunt.registerTask("serve", ["shell:django"])
+    grunt.registerTask("nginx", ["shell:nginx"]) // TODO. remove. better to have set up scripts in npm.
 
 };
