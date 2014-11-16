@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var debug = require("debug")("express101")
 
-/* GET users listing. */
 router.get('/', function(req, res) {
-  res.send('respond with a resource');
+    debug("debugging the shim out of this engine!")
+    res.send('responding with some user resource');
 });
 
 module.exports = router;
