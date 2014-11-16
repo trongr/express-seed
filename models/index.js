@@ -3,7 +3,13 @@ var mongoose = require('mongoose');
 var User = require("./user.js")
 var conf = require("../conf.js")(process.env.NODE_ENV)
 
-mongoose.connect('mongodb://localhost/' + conf.db.name, function(er){
+mongoose.connect('mongodb://localhost/' + conf.db.name, {
+    server: {
+      socketOptions: {
+        keepAlive: 1, // TODO. might also need this for replset.socketOptions. see mongoose docs for details
+      }
+    }
+}, function(er){
   if (er) throw er
   console.log(conf.db.name + ": mongoose connected")
 });
@@ -14,6 +20,23 @@ db.once('open', function callback () {
     console.log(conf.db.name + ": db open");
 });
 
-module.exports = {
-  User: User
-}
+module.exports = (function(){
+  var db = {
+    name: conf.db.name, // useful for tests, e.g. so we know which database we're dropping
+  }
+
+  db.models = {
+    User: User
+  }
+
+  // clean up collection, e.g. for testing. don't use in production!
+  // TODO. mongoose has a dropdatabase method i think
+  db.resetmodel = function(model, done){
+    db.models[model].remove({}, function(er){
+      if (er) return done({er:er, d:model, msg:"db resetmodel"})
+      done()
+    })
+  }
+
+  return db
+}());
