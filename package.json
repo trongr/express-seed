@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=express101 PORT=8080 node ./bin/www",
-    "postinstall": "node node_modules/protractor/bin/webdriver-manager update",
+    "postinstall": "./npmpostinstall.sh",
     "nginx": "conf/nginx/install.sh"
   },
   "dependencies": {
@@ -33,6 +33,9 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "matchdep": "^0.3.0",
     "phantomjs": "^1.9.12",
-    "protractor": "~1.3.1"
+    "protractor": "~1.3.1",
+    "mocha": "~2.0.1",
+    "grunt-mocha-test": "~0.12.3",
+    "chai": "~1.10.0"
   }
 }
