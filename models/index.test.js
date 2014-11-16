@@ -1,6 +1,8 @@
+process.env.NODE_ENV = "test" // need this guy so index.js knows we're in test env
+
 var expect = require('chai').should()
 var mongoose = require("mongoose")
-process.env.NODE_ENV = "test" // need this guy so index.js knows we're in test env
+
 var db = require("./index.js")
 var User = db.models.User
 var conf = require("../conf.js")(process.env.NODE_ENV)

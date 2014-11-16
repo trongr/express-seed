@@ -24,7 +24,8 @@ module.exports = function(grunt) {
               clearRequireCache: true // Optionally clear the require cache before running tests (defaults to false)
             },
             src: [
-              'models/**/*.test.js'
+              'models/**/*.test.js',
+              "routes/**/*.test.js",
             ]
           },
         },
@@ -61,7 +62,8 @@ module.exports = function(grunt) {
             files: [
               "Gruntfile.js",
               "conf.js",
-              "models/**/*.js"
+              "models/**/*.js",
+              "routes/**/*.js",
             ],
             tasks: [
               'test:mocha',
