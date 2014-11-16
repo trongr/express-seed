@@ -7,7 +7,7 @@ var db = require("./index.js")
 var User = db.models.User
 var conf = require("../conf.js")(process.env.NODE_ENV)
 
-describe("model index", function(){
+describe("User model", function(){
 
   var username = "john"
   var password = "password"
@@ -16,12 +16,14 @@ describe("model index", function(){
     db.resetmodel("User", done)
   })
 
-  beforeEach(function(){
-
-  })
-
   it("should be in test env", function(){
     db.name.should.equal(conf.db.name)
+  })
+
+  it("User model should be empty cause we just cleared it", function(){
+    User.count({}, function(er, count){
+      count.should.equal(0)
+    })
   })
 
   it("should save user model", function(done){

@@ -1,6 +1,20 @@
+var _ = require("lodash")
+
 var k = {
     karmaconf: 'karma.unit.conf.js',
     protractorconf: "protractor.conf.js",
+    clientfiles: [],
+    serverfiles: [
+      "conf.js",
+      "app.js",
+      "bin/www",
+      "models/**/*.js",
+      "api/**/*.js",
+    ],
+    testfiles: [
+      'models/**/*.test.js',
+      "api/**/*.test.js",
+    ]
 }
 
 module.exports = function(grunt) {
@@ -10,23 +24,18 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            all: [
-              'models/**/*.js',
-            ]
+            all: _.union(k.serverfiles, k.clientfiles)
         },
         mochaTest: {
           test: {
             options: {
               timeout: 2000,
-              reporter: 'min', // "spec", "list"
+              reporter: 'list', // "spec", "list", "min"
               captureFile: 'tmp/mocha.results.txt', // Optionally capture the reporter output to a file
               quiet: false, // Optionally suppress output to standard out (defaults to false)
               clearRequireCache: true // Optionally clear the require cache before running tests (defaults to false)
             },
-            src: [
-              'models/**/*.test.js',
-              "routes/**/*.test.js",
-            ]
+            src: k.testfiles
           },
         },
         karma: {
@@ -44,8 +53,8 @@ module.exports = function(grunt) {
             run: {}
         },
         shell: {
-            nginx: { // TODO. use for something else. nginx configs and other ones are done in npm
-                command: 'conf/nginx/install.sh',
+            node: { // TODO. use this for something else
+                command: 'DEBUG=express101 PORT=8080 node ./bin/www',
                 options: {
                     stdout: true,
                     stderr: true,
@@ -55,23 +64,18 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-          js: {
+          test: {
             options: {
               spawn: false,
             },
-            files: [
-              "Gruntfile.js",
-              "conf.js",
-              "models/**/*.js",
-              "routes/**/*.js",
-            ],
+            files: _.union(k.serverfiles, "Gruntfile.js"),
             tasks: [
               'test:mocha',
               // "test:karma"
               // "jshint", // let's not bother with jshint for now. lots of false positives
             ]
-          }
-        }
+          },
+        },
     });
 
     grunt.registerTask('default', ["test"]);
@@ -93,7 +97,5 @@ module.exports = function(grunt) {
             "test:e2e"
         ]);
     });
-
-    grunt.registerTask("nginx", ["shell:nginx"]) // TODO. remove. better to have set up scripts in npm.
 
 };

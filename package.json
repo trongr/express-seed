@@ -4,7 +4,7 @@
   "author": "trong",
   "private": true,
   "scripts": {
-    "start": "DEBUG=express101 PORT=8080 node ./bin/www",
+    "start": "NODE_ENV=dev DEBUG=express101 PORT=8080 node ./bin/www",
     "postinstall": "./npmpostinstall.sh",
     "nginx": "conf/nginx/install.sh"
   },
@@ -16,7 +16,8 @@
     "serve-favicon": "~2.1.3",
     "debug": "~2.0.0",
     "jade": "~1.6.0",
-    "mongoose": "~3.8.19"
+    "mongoose": "~3.8.19",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "chai": "~1.10.0",
