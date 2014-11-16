@@ -1,12 +1,13 @@
 var expect = require('chai').should()
 var User = require("./user.js")
 
-describe("user tests", function(){
-  var username
-  var password
+describe("user model", function(){
+
+  var username = "john"
+  var password = "password"
+
   beforeEach(function(){
-    username = "john"
-    password = "password"
+
   })
 
   it("should create a user", function(){
@@ -17,7 +18,8 @@ describe("user tests", function(){
     user1.should.have.property("updated")
   })
 
+  // todo
   it("should throw error when no username default", function(){
-    
+
   })
 })

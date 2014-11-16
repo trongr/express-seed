@@ -10,11 +10,14 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            all: ['gruntfile.js', 'tutorila/quickstart/static/**/*.js']
+            all: [
+              'models/**/*.js',
+            ]
         },
         mochaTest: {
           test: {
             options: {
+              timeout: 2000,
               reporter: 'min', // "spec", "list"
               captureFile: 'tmp/mocha.results.txt', // Optionally capture the reporter output to a file
               quiet: false, // Optionally suppress output to standard out (defaults to false)
@@ -57,20 +60,22 @@ module.exports = function(grunt) {
             },
             files: [
               "Gruntfile.js",
+              "conf.js",
               "models/**/*.js"
             ],
             tasks: [
               'test:mocha',
               // "test:karma"
+              // "jshint", // let's not bother with jshint for now. lots of false positives
             ]
           }
         }
     });
 
-    grunt.registerTask('default', ["jshint"]);
+    grunt.registerTask('default', ["test"]);
 
     grunt.registerTask('test', function(target) {
-        if (target == "mocha"){
+        if (target === "mocha"){
           return grunt.task.run(["mochaTest"])
         } else if (target === 'karma') {
             return grunt.task.run([
