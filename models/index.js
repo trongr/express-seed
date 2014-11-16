@@ -11,13 +11,13 @@ mongoose.connect('mongodb://localhost/' + conf.db.name, {
     }
 }, function(er){
   if (er) throw er
-  console.log(conf.db.name + ": mongoose connected")
+  console.log("mongoose connected: " + conf.db.name)
 });
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-    console.log(conf.db.name + ": db open");
+    console.log("db opened: " + conf.db.name);
 });
 
 module.exports = (function(){
