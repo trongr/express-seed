@@ -8,7 +8,7 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 
-// require('./config/passport')(passport); // pass passport for configuration
+var pass = require('./api/passport')(passport); // pass passport for configuration
 
 var users = require('./api/users.js');
 
@@ -34,7 +34,7 @@ app.use(flash());
 // TODO. refactor
 var isLoggedIn = function(req, res, next){
   if (req.isAuthenticated()) return next();
-  res.redirect('/');
+  res.redirect('/login');
 }
 
 var pagesdir = "public/pages/"
@@ -42,7 +42,16 @@ var pagesdir = "public/pages/"
 app.get('/', function(req, res){res.render('index.html')});
 app.get('/login', function(req, res){res.sendfile(pagesdir + 'login.html')});
 app.get('/signup', function(req, res){res.sendfile(pagesdir + 'signup.html')});
-// app.post('/signup', do all our passport stuff here); // TODO
+app.post('/signup', passport.authenticate('local-signup', {
+  successRedirect : '/profile', // redirect to the secure profile section
+  failureRedirect : '/signup', // redirect back to the signup page if there is an error
+  // failureFlash : true // allow flash messages // TODO. disabling right now cause we're not using flash
+}));
+app.post("/login", passport.authenticate('local-login', {
+  successRedirect : '/profile', // redirect to the secure profile section
+  failureRedirect : '/login', // redirect back to the signup page if there is an error
+  // failureFlash : true // allow flash messages // TODO
+}))
 app.get('/profile', isLoggedIn, function(req, res){res.sendfile(pagesdir + 'profile.html')});
 app.get('/logout', function(req, res){req.logout(); res.redirect('/')});
 app.use('/users', users);
