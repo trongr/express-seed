@@ -4,6 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
+
+// require('./config/passport')(passport); // pass passport for configuration
 
 var users = require('./api/users.js');
 
@@ -14,14 +19,32 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+// app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({ secret: '984g2ehkad97y3e2DFSBVCXwhr1hefhdaswryaaavadarrtwhq37vuUAHfah8yqyy2' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash());
+
+// TODO. refactor
+var isLoggedIn = function(req, res, next){
+  if (req.isAuthenticated()) return next();
+  res.redirect('/');
+}
+
+var pagesdir = "public/pages/"
+
 app.get('/', function(req, res){res.render('index.html')});
+app.get('/login', function(req, res){res.sendfile(pagesdir + 'login.html')});
+app.get('/signup', function(req, res){res.sendfile(pagesdir + 'signup.html')});
+// app.post('/signup', do all our passport stuff here); // TODO
+app.get('/profile', isLoggedIn, function(req, res){res.sendfile(pagesdir + 'profile.html')});
+app.get('/logout', function(req, res){req.logout(); res.redirect('/')});
 app.use('/users', users);
 
 // TODO. this dumps error to the client. not good for security

@@ -26,17 +26,17 @@ describe("user model:", function(){
     db.name.should.equal(conf.db.name)
   })
 
-  it("User model should be empty cause we just cleared it", function(){
+  it("User model should be empty cause we just cleared it", function(done){
     User.count({}, function(er, count){
       count.should.equal(0)
+      done(er)
     })
   })
 
   it("should save user model", function(done){
     new User({username:username, password:password}).save(function(er, user){
-      if (er) return done(er)
       user.should.have.property("username").equal(username)
-      done()
+      done(er)
     })
   })
 
