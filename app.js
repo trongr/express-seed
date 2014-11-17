@@ -8,9 +8,7 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 
-require('./api/passport')(passport); // pass passport for configuration
-var auth = require("./api/auth.js")
-
+var auth = require("./api/auth.js")(passport)
 var users = require('./api/users.js');
 
 var app = express();
@@ -38,9 +36,8 @@ app.use(flash());
 
 app.get('/', function(req, res){res.render('index.html')});
 app.use("/auth", auth)
-app.use('/users', users);
+// app.use('/users', users); // for now don't expose users to client
 
-// TODO. this dumps error to the client. not good for security
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -49,6 +46,9 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
+
+// TODO. this dumps error to the client. not good for security
+// TODO. in production check no stacktrace to client
 
 // development error handler
 // will print stacktrace

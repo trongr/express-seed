@@ -9,7 +9,7 @@ var conf = require("../conf.js")(process.env.NODE_ENV)
 
 describe("user model:", function(){
 
-  var username = "john"
+  var email = "john"
   var password = "password"
 
   before(function(done){
@@ -34,8 +34,9 @@ describe("user model:", function(){
   })
 
   it("should save user model", function(done){
-    new User({username:username, password:password}).save(function(er, user){
-      user.should.have.property("username").equal(username)
+    new User({local:{email:email, password:password}}).save(function(er, user){
+      user.should.have.property("local")
+        .have.property("email").equal(email)
       done(er)
     })
   })

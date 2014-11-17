@@ -12,7 +12,8 @@ var mongoose = require("mongoose")
 var db = require("../models/index.js")
 var conf = require("../conf.js")(process.env.NODE_ENV)
 
-describe("users api:", function(){
+// TODO. using passport with email instead of username, so not exposing users api anymore
+xdescribe("users api:", function(){
 
   before(function(done){
     db.resetmodel("User", done)
