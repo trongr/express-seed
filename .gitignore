@@ -7,3 +7,4 @@ app/bower_components
 .nodemonignore
 tmp
 npm-debug.log
+*~

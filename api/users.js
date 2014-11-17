@@ -41,8 +41,8 @@ router.route('/:username')
 	.delete(function(req, res) {
 		User.remove({
 			username: req.params.username
-		}, function(er, user){
-			u.send(res, er, {user:user})
+		}, function(er, count){
+			u.send(res, er, {count:count})
 		})
 	})
 

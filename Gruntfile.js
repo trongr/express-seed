@@ -30,7 +30,7 @@ module.exports = function(grunt) {
           test: {
             options: {
               timeout: 2000,
-              reporter: 'list', // "spec", "list", "min"
+              reporter: 'spec', // "spec", "list", "min", "dot"
               captureFile: 'tmp/mocha.results.txt', // Optionally capture the reporter output to a file
               quiet: false, // Optionally suppress output to standard out (defaults to false)
               clearRequireCache: true // Optionally clear the require cache before running tests (defaults to false)

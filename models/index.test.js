@@ -7,7 +7,7 @@ var db = require("./index.js")
 var User = db.models.User
 var conf = require("../conf.js")(process.env.NODE_ENV)
 
-describe("User model", function(){
+describe("user model:", function(){
 
   var username = "john"
   var password = "password"
@@ -15,6 +15,12 @@ describe("User model", function(){
   before(function(done){
     db.resetmodel("User", done)
   })
+
+  // not dropping db in case you want to verify the result by hand, e.g. in mongo terminal
+  // after(function(){
+  //   // drop the db for the next test suite. could use resetmodel here too
+  //   mongoose.connection.db.dropDatabase()
+  // })
 
   it("should be in test env", function(){
     db.name.should.equal(conf.db.name)
