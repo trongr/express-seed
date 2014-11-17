@@ -27,29 +27,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ secret: '984g2ehkad97y3e2DFSBVCXwhr1hefhdaswryaaavadarrtwhq37vuUAHfah8yqyy2' })); // session secret
+app.use(session({
+  secret: '984g2ehkad97y3e2DFSBVCXwhr1hefhdaswryaaavadarrtwhq37vuUAHfah8yqyy2',
+  saveUninitialized: true,
+  resave: true
+}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
 
-var pagesdir = "public/pages/"
-
 app.get('/', function(req, res){res.render('index.html')});
-
 app.use("/auth", auth)
-
-app.post('/signup', passport.authenticate('local-signup', {
-  successRedirect : '/auth/profile', // redirect to the secure profile section
-  failureRedirect : '/auth/signup', // redirect back to the signup page if there is an error
-  // failureFlash : true // allow flash messages // TODO. disabling right now cause we're not using flash
-}));
-
-app.post("/login", passport.authenticate('local-login', {
-  successRedirect : '/auth/profile', // redirect to the secure profile section
-  failureRedirect : '/auth/login', // redirect back to the signup page if there is an error
-  // failureFlash : true // allow flash messages // TODO
-}))
-app.get('/logout', function(req, res){req.logout(); res.redirect('/')});
 app.use('/users', users);
 
 // TODO. this dumps error to the client. not good for security
