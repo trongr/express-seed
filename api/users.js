@@ -36,10 +36,14 @@ router.route('/:username')
 		})
 	})
 	.put(function(req, res) {
-		res.send({user:{}})
+		res.send({user:"todo"})
 	})
 	.delete(function(req, res) {
-		res.send({user:{}})
+		User.remove({
+			username: req.params.username
+		}, function(er, user){
+			u.send(res, er, {user:user})
+		})
 	})
 
 module.exports = router;
