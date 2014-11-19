@@ -1,0 +1,1 @@
+generate ssl certificates and keys, and put them in conf/nginx/conf.d/. in install/postinstall script copy them to /etc/nginx/conf.d/. alternatively use a certificate authority (CA).
