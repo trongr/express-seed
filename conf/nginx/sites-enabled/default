@@ -10,8 +10,7 @@ server {
 
 server {
     listen 443;
-    # TODO. change this for production server cause we won't be using vagrant
-    root /home/vagrant/vm/express101;
+    root /home/ubuntu/express-seed;
     # server_name dollarquestion.com; # TODO
 
     # TODO. turn static on, enable archiving and basic scraping

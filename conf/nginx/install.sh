@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# TODO. cp ssl conf into /etc/nginx/conf.d/
 sudo cp conf/nginx/sites-enabled/default /etc/nginx/sites-enabled/
+sudo cp conf/nginx/conf.d/{devcert.pem,devkey.pem} /etc/nginx/conf.d/
 sudo service nginx restart
